@@ -22,3 +22,17 @@ The following JSON schemas for data structures typically used to represent modif
   * the information included must be used in conjunction with the original collection of gates from a circuit to determine, for example, the original operation for each gate
 * `assignment.schema.json`: Representation for a map from wire indices to arrays of labels (e.g., to be used to represent the labels assigned to each wire in a circuit), where:
   * the indices are drawn from with the original circuit definition
+
+## Serialized Representations
+
+### Serialized Representation of Garbled Gates (SRGG)
+
+The SRGG format represents an ordered collection of wire label sequences as a byte stream that is amenable to relatively straightforward implementations in different languages and platforms. This format assumes that the number of bits in an individual label is a multiple of eight. The bytes are ordered in the following way:
+
+* The first byte represents the number of bytes in each label (which we call `b`)
+* The first four bytes represent the total number of entries (which we call `n`)
+  * The first byte is the 8 least significant bits (i.e., `n % 256`)
+  * Subsequent bytes are in increasing order of significance
+* All subsequent bytes represent each of the `n` individual entries (i.e., individual label sequences containing zero or more labels)
+  * The first byte of each entry is the number of labels (which we call `k`) in the sequence corresponding to that entry
+  * If the number of labels in the sequence is greater than zero, then the next `k * b` bytes represent the label data, with each string of `b` bytes representing one of the labels
