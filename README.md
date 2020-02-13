@@ -4,7 +4,7 @@ Standards and conventions governing data structures and message formats that may
 ## Purpose
 These standards and conventions govern the design and implementation of garbled circuit protocol libraries. They serve at least two purposes. First, they establish common formats for messages and data that must be exchanged by protocol participants. If different implementations (potentially built using different frameworks and targeting different platforms) adhere to these conventions, they should be mutually compatible and interoperable. Second, they articulate conventions for data structures used in such libraries. These conventions can guide design decisions at the time of implementation, thus helping reduce the number of variations across different implementations (when such variations serve no other legitimate engineering or design purpose).
 
-## Schemas
+## Structured Representations
 A number of JSON schemas for common data structures and message formats are included in this repository. These schemas are inspired by the established [Bristol Fashion](https://homes.esat.kuleuven.be/~nsmart/MPC/) format, which is supported by several compiled MPC libraries such as [SCALE-MAMBA](https://homes.esat.kuleuven.be/~nsmart/SCALE/). A few optional extensions have been introduced into the data structure definitions that may be useful within implementations built using certain programming languages.
 
 ### Unmodified Circuits and Gates
