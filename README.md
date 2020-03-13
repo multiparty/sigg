@@ -27,17 +27,18 @@ The following JSON schemas for data structures typically used to represent modif
 
 ### Serialized Representation of Garbled Gates (SRGG)
 
-The SRGG format represents an ordered collection of wire label sequences as a byte stream that is amenable to relatively straightforward implementations in different languages and platforms. This format assumes that the number of bits in an individual label is a multiple of eight. The bytes are ordered in the following way:
+The SRGG format represents an ordered collection of wire label sequences as a byte stream that is amenable to relatively straightforward implementations (e.g., as a stream of bytes or unsigned character values) in different languages and platforms. This format assumes that the number of bits in an individual label is a multiple of eight. The bytes are ordered in the following way:
 
 * The first byte represents the number of bytes in each label (which we call `b`)
 * The next four bytes represent the total number of entries (which we call `n`)
   * The first byte is the 8 least significant bits (i.e., `n % 256`)
-  * Subsequent bytes are in increasing order of significance
+  * Subsequent bytes represent subsequent 8-bit portions of the value, in increasing order of significance
 * All subsequent bytes represent each of the `n` individual entries (i.e., individual label sequences containing zero or more labels)
   * The first byte (and possibly only byte) of each entry represents the operation:
-    * A value of `0` indicates that there is no operation and that the label sequence has no length and no entries
-    * A value of `1` represents `AND`
-    * A value of `2` represents `XOR`
-    * A value of `3` represents `NOT`
-  * If the first byte is not `0`, then the second byte of each entry is the number of labels (which we call `k`) in the sequence corresponding to that entry
+    * A value of `0` indicates that there is no operation and that the label sequence has no length and no elements
+    * A value of `1` indicates that there is a label sequence for this entry, but no operation has been specified
+    * A value of `2` represents `AND`
+    * A value of `3` represents `XOR`
+    * A value of `4` represents `NOT`
+  * If the first byte is not `0`, then the second byte of each entry is the number of labels (which we call `k`) in the label sequence corresponding to that entry; this byte *may* be `0` (i.e., an empty label sequence is permitted)
   * If the number of labels in the sequence is greater than zero, then the next `k * b` bytes represent the label data, with each string of `b` bytes representing one of the labels
