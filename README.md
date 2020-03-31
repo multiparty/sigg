@@ -37,8 +37,11 @@ The SRGG format represents an ordered collection of wire label sequences as a by
   * The first byte (and possibly only byte) of each entry represents the operation:
     * A value of `0` indicates that there is no operation and that the label sequence has no length and no elements
     * A value of `1` indicates that there is a label sequence for this entry, but no operation has been specified
-    * A value of `2` represents `AND`
-    * A value of `3` represents `XOR`
-    * A value of `4` represents `NOT`
+    * A value of `2` represents `NOT`
+    * A value of `3` represents `AND`
+    * A value of `4` represents `XOR`
+    * A value of `5` represents `OR`
+    * A value of `6` represents `NAND`
+    * A value of `7` represents `NIMD` ("not implied by", also known as [negated conditional then-if](https://en.wikipedia.org/wiki/Truth_table#Truth_table_for_most_commonly_used_logical_operators))
   * If the first byte is not `0`, then the second byte of each entry is the number of labels (which we call `k`) in the label sequence corresponding to that entry; this byte *may* be `0` (i.e., an empty label sequence is permitted)
   * If the number of labels in the sequence is greater than zero, then the next `k * b` bytes represent the label data, with each string of `b` bytes representing one of the labels
